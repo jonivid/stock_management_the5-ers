@@ -25,5 +25,4 @@ describe('AuthService', () => {
     expect(service).toBeDefined();
   });
 
-  // Add more unit tests here
 });

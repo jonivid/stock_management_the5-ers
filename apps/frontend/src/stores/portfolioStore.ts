@@ -7,7 +7,6 @@ class PortfolioStore {
   loading = false;
   error: string | null = null;
 
-  // Stock details cache and per-symbol loading/error
   stockDetails: Record<string, StockDetail> = {};
   stockDetailsLoading: Record<string, boolean> = {};
   stockDetailsError: Record<string, string | null> = {};
@@ -37,7 +36,6 @@ class PortfolioStore {
   }
 
   async fetchStockDetail(symbol: string) {
-    // If already cached, do not refetch
     if (this.stockDetails[symbol]) return;
     this.stockDetailsLoading[symbol] = true;
     this.stockDetailsError[symbol] = null;

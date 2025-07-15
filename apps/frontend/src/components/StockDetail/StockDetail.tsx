@@ -1,23 +1,10 @@
 import { Descriptions, Typography } from "antd";
+import type { StockDetail } from "../../stores/types";
 
 const { Text } = Typography;
 
 export interface StockDetailProps {
-  detail: {
-    name: string;
-    price: number;
-    changePercentage: number;
-    dayLow: number;
-    dayHigh: number;
-    yearLow: number;
-    yearHigh: number;
-    volume: number;
-    marketCap: number;
-    avgPrice50: number;
-    avgPrice200: number;
-    open: number;
-    previousClose: number;
-  };
+  detail: StockDetail;
 }
 
 export const StockDetail = ({ detail }: StockDetailProps) => (

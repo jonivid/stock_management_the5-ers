@@ -17,10 +17,15 @@ const AppLayoutComponent: React.FC<{ children: React.ReactNode }> = ({
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (isLoggedIn) {
+    if (
+      isLoggedIn &&
+      (location.pathname === "/login" ||
+        location.pathname === "/signup" ||
+        location.pathname === "/")
+    ) {
       navigate("/portfolio", { replace: true });
     }
-  }, [isLoggedIn, navigate]);
+  }, [isLoggedIn, navigate, location.pathname]);
 
   // Helper to logout and navigate
   const handleLogout = () => {

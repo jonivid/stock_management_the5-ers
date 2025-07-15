@@ -9,6 +9,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import PortfolioPage from "./pages/Portfolio";
+import StockDetailPage from "./pages/StockDetailPage";
 import { AppLayout } from "./components/AppLayout/AppLayout";
 import { ErrorBoundary } from "./components/ErrorBoundary/ErrorBoundary";
 import { useAuth } from "./stores/useAuth";
@@ -34,6 +35,15 @@ function App() {
               element={
                 <ProtectedRoute>
                   <PortfolioPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/stock/:symbol"
+              element={
+                <ProtectedRoute>
+                  {/* StockDetailPage will be created */}
+                  <StockDetailPage />
                 </ProtectedRoute>
               }
             />

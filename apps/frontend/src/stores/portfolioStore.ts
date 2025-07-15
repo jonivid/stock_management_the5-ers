@@ -1,12 +1,6 @@
 import { makeAutoObservable, runInAction } from "mobx";
-import axios from "axios";
-import { authStore } from "./useAuth";
-
-// Use the same BASE_URL logic as useAxios
-const RAW_BASE_URL = import.meta.env.VITE_BACKEND_URL;
-const BASE_URL = RAW_BASE_URL.endsWith("/")
-  ? RAW_BASE_URL.slice(0, -1)
-  : RAW_BASE_URL;
+import { axiosInstance } from "../services/axiosInstance";
+import type { StockDetail } from "./types";
 
 class PortfolioStore {
   portfolio: string[] = [];
@@ -14,7 +8,7 @@ class PortfolioStore {
   error: string | null = null;
 
   // Stock details cache and per-symbol loading/error
-  stockDetails: Record<string, any> = {};
+  stockDetails: Record<string, StockDetail> = {};
   stockDetailsLoading: Record<string, boolean> = {};
   stockDetailsError: Record<string, string | null> = {};
 
@@ -26,12 +20,7 @@ class PortfolioStore {
     this.loading = true;
     this.error = null;
     try {
-      const res = await axios.get("/portfolio", {
-        baseURL: BASE_URL,
-        headers: {
-          Authorization: `Bearer ${authStore.token}`,
-        },
-      });
+      const res = await axiosInstance.get("/portfolio");
       runInAction(() => {
         this.portfolio = Array.isArray(res.data)
           ? res.data.map((item: any) => item.symbol)
@@ -53,11 +42,7 @@ class PortfolioStore {
     this.stockDetailsLoading[symbol] = true;
     this.stockDetailsError[symbol] = null;
     try {
-      const res = await axios.get("/fmp-client/quote", {
-        baseURL: BASE_URL,
-        headers: {
-          Authorization: `Bearer ${authStore.token}`,
-        },
+      const res = await axiosInstance.get("/fmp-client/quote", {
         params: { symbol },
       });
       const detail = Array.isArray(res.data) ? res.data[0] : null;
@@ -82,16 +67,7 @@ class PortfolioStore {
     this.loading = true;
     this.error = null;
     try {
-      await axios.post(
-        "/portfolio",
-        { symbol },
-        {
-          baseURL: BASE_URL,
-          headers: {
-            Authorization: `Bearer ${authStore.token}`,
-          },
-        }
-      );
+      await axiosInstance.post("/portfolio", { symbol });
       await this.fetchPortfolio();
     } catch (err: any) {
       runInAction(() => {
@@ -106,12 +82,7 @@ class PortfolioStore {
     this.loading = true;
     this.error = null;
     try {
-      await axios.delete(`/portfolio/${symbol}`, {
-        baseURL: BASE_URL,
-        headers: {
-          Authorization: `Bearer ${authStore.token}`,
-        },
-      });
+      await axiosInstance.delete(`/portfolio/${symbol}`);
       await this.fetchPortfolio();
     } catch (err: any) {
       runInAction(() => {

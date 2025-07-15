@@ -3,7 +3,7 @@ import { observer } from "mobx-react-lite";
 import { usePortfolioStore } from "../stores/portfolioStore";
 import { PortfolioList } from "../components/Portfolio/PortfolioList";
 import { StockSearch } from "../components/Portfolio/StockSearch";
-import { Spin, Alert, Empty, Segmented, Input } from "antd";
+import { Spin, Alert, Empty, Segmented, Input, Skeleton } from "antd";
 
 const SECTION_HEADER_HEIGHT = 40; // px
 const SEARCH_CONTROLS_HEIGHT = 48; // px (approximate height of Segmented + Input)
@@ -115,17 +115,32 @@ const PortfolioPage = observer(() => {
           />
           <div style={{ flex: 1, minHeight: 0, overflowY: "auto", padding: 8 }}>
             {store.loading ? (
-              <Spin
-                size="large"
-                style={{ display: "block", margin: "40px auto" }}
-              />
+              <div style={{ padding: "40px 0" }}>
+                <Skeleton active paragraph={{ rows: 4 }} title={false} />
+              </div>
             ) : store.error ? (
-              <Alert
-                type="error"
-                message={store.error}
-                showIcon
-                style={{ margin: "24px 0" }}
-              />
+              <div style={{ margin: "24px 0", textAlign: "center" }}>
+                <Alert
+                  type="error"
+                  message={
+                    <>
+                      Failed to load portfolio. Please try again.
+                      <br />
+                      <span style={{ fontSize: 12, color: "#888" }}>
+                        {store.error}
+                      </span>
+                    </>
+                  }
+                  showIcon
+                  style={{ marginBottom: 16 }}
+                />
+                <button
+                  onClick={() => store.fetchPortfolio()}
+                  style={{ marginTop: 8 }}
+                >
+                  Retry
+                </button>
+              </div>
             ) : store.portfolio.length === 0 ? (
               <Empty
                 description="No stocks in your portfolio yet."

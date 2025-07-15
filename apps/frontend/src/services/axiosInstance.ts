@@ -10,7 +10,6 @@ export const axiosInstance = axios.create({
   baseURL: BASE_URL,
 });
 
-// Attach Authorization header if token is present
 axiosInstance.interceptors.request.use((config) => {
   const token = authStore.token;
   if (token) {

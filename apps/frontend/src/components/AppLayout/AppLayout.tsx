@@ -39,26 +39,14 @@ const AppLayoutComponent: React.FC<{ children: React.ReactNode }> = ({
   ];
 
   return (
-    <Layout style={{ minHeight: "100vh" }}>
+    <Layout style={{ height: "100%" }}>
       {isLoggedIn && (
-        <Sider breakpoint="lg" collapsedWidth="0">
-          <div
-            style={{
-              height: 64,
-              background: "rgba(255,255,255,0.2)",
-              margin: 16,
-              borderRadius: 8,
-              textAlign: "center",
-              lineHeight: "64px",
-              fontWeight: 700,
-            }}
-          >
-            {COMPANY_NAME}
-          </div>
+        <Sider width={240} style={{ height: "100%", overflowY: "auto" }}>
+          <div className="sidenav-logo">{COMPANY_NAME}</div>
           <Menu
-            theme="dark"
             mode="inline"
             selectedKeys={[location.pathname]}
+            style={{ borderRight: 0 }}
             items={menuItems}
           />
         </Sider>
@@ -72,6 +60,8 @@ const AppLayoutComponent: React.FC<{ children: React.ReactNode }> = ({
             background: "#fff",
             padding: "0 24px",
             boxShadow: "0 2px 8px #f0f1f2",
+            height: 64,
+            flexShrink: 0,
           }}
         >
           <div style={{ fontWeight: 700, fontSize: 20 }}>
@@ -90,10 +80,9 @@ const AppLayoutComponent: React.FC<{ children: React.ReactNode }> = ({
         </Header>
         <Content
           style={{
-            margin: 0,
             padding: 24,
-            minHeight: 280,
-            background: "#f5f6fa",
+            overflowY: "auto",
+            height: "calc(100% - 64px)",
           }}
         >
           {children}

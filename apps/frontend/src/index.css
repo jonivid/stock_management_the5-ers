@@ -1,3 +1,12 @@
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -5,15 +14,54 @@
 }
 
 body {
-  margin: 0;
-  min-width: 320px;
-  min-height: 100vh;
   background: #fff;
   color: #222;
+}
+
+a:link {
+  color: #1677ff;
+}
+a:visited {
+  color: #1677ff;
+}
+a:hover,
+a:active {
+  color: #4096ff;
 }
 
 *,
 *::before,
 *::after {
   box-sizing: border-box;
+}
+
+.sidenav-link {
+  display: block;
+  padding: 12px 24px;
+  margin: 8px 12px;
+  border-radius: 6px;
+  color: #1677ff;
+  background: #f0f7ff;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s;
+}
+.sidenav-link.active,
+.sidenav-link:hover {
+  background: #1677ff;
+  color: #fff;
+}
+
+.sidenav-logo {
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.5rem;
+  background: rgba(255, 255, 255, 0.2);
+  margin: 16px;
+  border-radius: 8px;
+  color: #1677ff;
+  letter-spacing: 1px;
 }

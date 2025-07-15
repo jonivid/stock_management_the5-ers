@@ -71,10 +71,4 @@ describe("FmpClientService (integration)", () => {
     data.forEach((item) => expect(item.exchange).toBe("NASDAQ"));
   });
 
-  // Error handling test (uncomment to run, will fail if API key is valid)
-  // it('should handle invalid API key with an error', async () => {
-  //   process.env.FMP_API_KEY = 'INVALID_KEY';
-  //   const brokenService = new FmpClientService(service['httpService']);
-  //   await expect(brokenService.getQuote('AAPL')).rejects.toThrow();
-  // });
 });

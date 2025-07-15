@@ -13,7 +13,15 @@ describe("FmpClientService", () => {
         FmpClientService,
         {
           provide: HttpService,
-          useValue: { get: jest.fn() },
+          useValue: {
+            get: jest.fn(),
+            axiosRef: {
+              defaults: {
+                baseURL: "http://mock-base-url",
+                params: { apikey: "mock-api-key" },
+              },
+            },
+          },
         },
       ],
     }).compile();

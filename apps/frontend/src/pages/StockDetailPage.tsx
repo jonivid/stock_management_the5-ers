@@ -1,9 +1,10 @@
 import { useParams, Link } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 import { usePortfolioStore } from "../stores/portfolioStore";
-import { Card, Typography, Spin, Alert, Button } from "antd";
+import { Card, Typography, Alert, Button } from "antd";
 import { useEffect } from "react";
 import { StockDetail } from "../components/StockDetail/StockDetail";
+import { StockDetailSkeleton } from "../components/StockDetail/StockDetailSkeleton";
 
 interface StockDetailPageProps {}
 
@@ -38,14 +39,43 @@ const StockDetailPage = observer(({}: StockDetailPageProps) => {
       <Title level={3} style={{ marginBottom: 0 }}>
         {symbol}
       </Title>
-      {loading && <Spin style={{ margin: "32px 0" }} />}
+      {loading && (
+        <div style={{ margin: "32px 0" }}>
+          <div
+            style={{
+              border: "1px solid #f0f0f0",
+              borderRadius: 8,
+              padding: 24,
+              background: "#fff",
+            }}
+          >
+            <StockDetailSkeleton />
+          </div>
+        </div>
+      )}
       {error && (
-        <Alert
-          type="error"
-          message={error}
-          showIcon
-          style={{ margin: "16px 0" }}
-        />
+        <div style={{ margin: "16px 0", textAlign: "center" }}>
+          <Alert
+            type="error"
+            message={
+              <>
+                Failed to load stock details. Please try again.
+                <br />
+                <span style={{ fontSize: 12, color: "#888" }}>{error}</span>
+              </>
+            }
+            showIcon
+            style={{ marginBottom: 16 }}
+          />
+          {symbol && (
+            <button
+              onClick={() => store.fetchStockDetail(symbol)}
+              style={{ marginTop: 8 }}
+            >
+              Retry
+            </button>
+          )}
+        </div>
       )}
       {detail && <StockDetail detail={detail} />}
     </Card>

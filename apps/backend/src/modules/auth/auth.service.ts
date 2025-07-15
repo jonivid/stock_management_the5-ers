@@ -11,13 +11,13 @@ export class AuthService {
     private readonly jwtService: JwtService
   ) {}
 
-  async validateUser(username: string, password: string): Promise<User | null> {
-    return this.usersService.validateUser(username, password);
+  async validateUser(email: string, password: string): Promise<User | null> {
+    return this.usersService.validateUser(email, password);
   }
 
   async login(loginUserDto: LoginUserDto) {
     const user = (await this.validateUser(
-      loginUserDto.username,
+      loginUserDto.email,
       loginUserDto.password
     )) as UserDocument;
     if (!user) {
@@ -25,12 +25,11 @@ export class AuthService {
     }
     const payload = {
       sub: user.id,
-      username: user.username,
       email: user.email,
     };
     return {
       access_token: this.jwtService.sign(payload),
-      user: { id: user.id, username: user.username, email: user.email },
+      user: { id: user.id, email: user.email },
     };
   }
 }

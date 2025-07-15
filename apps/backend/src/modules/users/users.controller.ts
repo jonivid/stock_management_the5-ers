@@ -13,6 +13,6 @@ export class UsersController {
     const user = (await this.usersService.createUser(
       createUserDto
     )) as UserDocument;
-    return { id: user.id, username: user.username, email: user.email };
+    return { id: user.id, email: user.email };
   }
 }

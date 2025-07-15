@@ -5,8 +5,8 @@ import { PortfolioList } from "../components/Portfolio/PortfolioList";
 import { StockSearch } from "../components/Portfolio/StockSearch";
 import { Spin, Alert, Empty, Segmented, Input, Skeleton } from "antd";
 
-const SECTION_HEADER_HEIGHT = 40; // px
-const SEARCH_CONTROLS_HEIGHT = 48; // px (approximate height of Segmented + Input)
+const SECTION_HEADER_HEIGHT = 40;
+const SEARCH_CONTROLS_HEIGHT = 48;
 
 const sectionHeaderStyle = {
   height: SECTION_HEADER_HEIGHT,
@@ -48,7 +48,6 @@ const PortfolioPage = observer(() => {
           gap: 24,
         }}
       >
-        {/* Search Section */}
         <div
           style={{
             flex: 1,
@@ -95,7 +94,6 @@ const PortfolioPage = observer(() => {
             />
           </div>
         </div>
-        {/* Portfolio Section */}
         <div
           style={{
             flex: 1,
@@ -106,7 +104,6 @@ const PortfolioPage = observer(() => {
           }}
         >
           <div style={sectionHeaderStyle}>Your Portfolio</div>
-          {/* Spacer to match search controls height */}
           <div
             style={{
               height: SEARCH_CONTROLS_HEIGHT,

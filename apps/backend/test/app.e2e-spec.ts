@@ -23,5 +23,4 @@ describe("AppController (e2e)", () => {
     return request(app.getHttpServer()).get("/").expect(404);
   });
 
-  // Add more e2e tests for /users/signup, /auth/login, etc.
 });

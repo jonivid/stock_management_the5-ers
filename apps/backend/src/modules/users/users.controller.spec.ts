@@ -19,5 +19,4 @@ describe("UsersController", () => {
     expect(controller).toBeDefined();
   });
 
-  // Add more integration tests here
 });

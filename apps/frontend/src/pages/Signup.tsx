@@ -73,8 +73,7 @@ const Signup = observer(() => {
       data: { email: values.email, password: values.password },
     });
     if (res && res.id && res.email) {
-      // Optionally show a success message here
-      navigate("/login"); // or wherever you want to go after signup
+      navigate("/login");
     } else {
       setError("Signup failed. Please try again.");
     }

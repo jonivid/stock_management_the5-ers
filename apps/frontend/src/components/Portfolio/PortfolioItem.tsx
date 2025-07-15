@@ -12,7 +12,6 @@ export const PortfolioItem = observer(({ symbol }: PortfolioItemProps) => {
     store.removeStock(symbol);
   };
   const handleItemClick = (e: React.MouseEvent) => {
-    // Prevent navigation if Remove button is clicked
     if ((e.target as HTMLElement).closest("button")) return;
     navigate(`/stock/${symbol}`);
   };

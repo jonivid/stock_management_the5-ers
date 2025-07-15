@@ -25,5 +25,4 @@ describe('UsersService', () => {
     expect(service).toBeDefined();
   });
 
-  // Add more unit tests here
 });

@@ -1,6 +1,5 @@
 import { Layout, Menu } from "antd";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { ThemeToggle } from "../ThemeToggle/ThemeToggle";
 import { useAuth } from "../../stores/useAuth";
 import { COMPANY_NAME } from "../../constants";
 import { observer } from "mobx-react-lite";
@@ -79,7 +78,6 @@ const AppLayoutComponent: React.FC<{ children: React.ReactNode }> = ({
             <Link to="/">{COMPANY_NAME}</Link>
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-            <ThemeToggle />
             {isLoggedIn && user && (
               <>
                 <span style={{ marginLeft: 16 }}>{user.email}</span>

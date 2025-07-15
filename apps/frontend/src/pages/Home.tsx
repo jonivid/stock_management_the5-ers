@@ -10,7 +10,7 @@ export default function Home() {
     <div className="home-hero">
       <Row justify="center" align="middle" style={{ minHeight: "80vh" }}>
         <Col xs={24} sm={20} md={16} lg={12}>
-          <Card bordered={false} className="home-hero-card">
+          <Card variant="borderless" className="home-hero-card">
             <Title level={1} style={{ textAlign: "center" }}>
               Welcome to {COMPANY_NAME}
             </Title>

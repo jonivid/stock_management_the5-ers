@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 import { useAuth } from "../stores/useAuth";
@@ -18,8 +18,13 @@ const Login = observer(() => {
   const [error, setError] = useState<string | null>(null);
   const { loading, request } = useAxios<LoginResponse>();
 
+  useEffect(() => {
+    if (auth.isLoggedIn) {
+      navigate("/portfolio", { replace: true });
+    }
+  }, [auth.isLoggedIn, navigate]);
+
   if (auth.isLoggedIn) {
-    navigate("/portfolio", { replace: true });
     return null;
   }
 

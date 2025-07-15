@@ -26,6 +26,7 @@ services:
       JWT_SECRET: ${JWT_SECRET}
       FMP_API_KEY: ${FMP_API_KEY}
       FMP_BASE_URL: ${FMP_BASE_URL}
+      BIND_HOST: 0.0.0.0
     depends_on:
       - mongo
     volumes:

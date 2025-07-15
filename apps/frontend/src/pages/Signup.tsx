@@ -8,8 +8,8 @@ import { COMPANY_NAME } from "../constants";
 import { useAxios } from "../hooks/useAxios";
 
 interface SignupResponse {
-  access_token: string;
-  user: { email: string };
+  email: string;
+  id: string;
 }
 
 const Signup = observer(() => {
@@ -72,9 +72,9 @@ const Signup = observer(() => {
       method: "POST",
       data: { email: values.email, password: values.password },
     });
-    if (res && res.access_token && res.user) {
-      auth.login(res.user.email, res.access_token);
-      navigate("/portfolio");
+    if (res && res.id && res.email) {
+      // Optionally show a success message here
+      navigate("/login"); // or wherever you want to go after signup
     } else {
       setError("Signup failed. Please try again.");
     }

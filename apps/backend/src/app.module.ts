@@ -4,6 +4,8 @@ import * as Joi from "joi";
 import { DatabaseModule } from "./modules/database/database.module";
 import { UsersModule } from "./modules/users/users.module";
 import { AuthModule } from "./modules/auth/auth.module";
+import { PortfolioModule } from "./modules/portfolio/portfolio.module";
+import { FmpClientModule } from "./modules/fmp-client/fmp-client.module";
 
 @Module({
   imports: [
@@ -20,7 +22,8 @@ import { AuthModule } from "./modules/auth/auth.module";
     DatabaseModule,
     UsersModule,
     AuthModule,
-    // ...other modules
+    PortfolioModule,
+    FmpClientModule,
   ],
 })
 export class AppModule {}

@@ -1,16 +1,41 @@
 import { Layout, Menu } from "antd";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { ThemeToggle } from "../ThemeToggle/ThemeToggle";
 import { useAuth } from "../../stores/useAuth";
 import { COMPANY_NAME } from "../../constants";
+import { observer } from "mobx-react-lite";
+import { useEffect } from "react";
 
 const { Header, Sider, Content } = Layout;
 
-export const AppLayout: React.FC<{ children: React.ReactNode }> = ({
+const AppLayoutComponent: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const { isLoggedIn, user, logout } = useAuth();
+  const auth = useAuth();
+  const { isLoggedIn, user } = auth;
   const location = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate("/portfolio", { replace: true });
+    }
+  }, [isLoggedIn, navigate]);
+
+  // Helper to logout and navigate
+  const handleLogout = () => {
+    auth.logout();
+    navigate("/login");
+  };
+
+  // AntD Menu items array
+  const menuItems = [
+    {
+      key: "/portfolio",
+      label: <Link to="/portfolio">Portfolio</Link>,
+    },
+    // Add more items here if needed
+  ];
 
   return (
     <Layout style={{ minHeight: "100vh" }}>
@@ -29,19 +54,12 @@ export const AppLayout: React.FC<{ children: React.ReactNode }> = ({
           >
             {COMPANY_NAME}
           </div>
-          <Menu theme="dark" mode="inline" selectedKeys={[location.pathname]}>
-            <Menu.Item key="/portfolio">
-              <Link to="/portfolio">Portfolio</Link>
-            </Menu.Item>
-            {/* Add more nav items here */}
-            <Menu.Item
-              key="logout"
-              onClick={logout}
-              style={{ position: "absolute", bottom: 0, width: "100%" }}
-            >
-              Logout
-            </Menu.Item>
-          </Menu>
+          <Menu
+            theme="dark"
+            mode="inline"
+            selectedKeys={[location.pathname]}
+            items={menuItems}
+          />
         </Sider>
       )}
       <Layout>
@@ -61,7 +79,12 @@ export const AppLayout: React.FC<{ children: React.ReactNode }> = ({
           <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
             <ThemeToggle />
             {isLoggedIn && user && (
-              <span style={{ marginLeft: 16 }}>{user.email}</span>
+              <>
+                <span style={{ marginLeft: 16 }}>{user.email}</span>
+                <button style={{ marginLeft: 16 }} onClick={handleLogout}>
+                  Logout
+                </button>
+              </>
             )}
           </div>
         </Header>
@@ -79,3 +102,5 @@ export const AppLayout: React.FC<{ children: React.ReactNode }> = ({
     </Layout>
   );
 };
+
+export const AppLayout = observer(AppLayoutComponent);

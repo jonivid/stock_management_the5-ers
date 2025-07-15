@@ -2,6 +2,7 @@ import { Module } from "@nestjs/common";
 import { HttpModule } from "@nestjs/axios";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { FmpClientService } from "./fmp-client.service";
+import { FmpClientController } from "./fmp-client.controller";
 
 @Module({
   imports: [
@@ -22,5 +23,6 @@ import { FmpClientService } from "./fmp-client.service";
   ],
   providers: [FmpClientService],
   exports: [FmpClientService],
+  controllers: [FmpClientController],
 })
 export class FmpClientModule {}

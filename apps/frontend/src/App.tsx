@@ -8,11 +8,10 @@ import { observer } from "mobx-react-lite";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import PortfolioPage from "./pages/Portfolio";
 import { AppLayout } from "./components/AppLayout/AppLayout";
 import { ErrorBoundary } from "./components/ErrorBoundary/ErrorBoundary";
 import { useAuth } from "./stores/useAuth";
-
-const Portfolio = () => <div>Portfolio Page (protected, coming soon)</div>;
 
 const ProtectedRoute = observer(
   ({ children }: { children: React.ReactNode }) => {
@@ -34,7 +33,7 @@ function App() {
               path="/portfolio"
               element={
                 <ProtectedRoute>
-                  <Portfolio />
+                  <PortfolioPage />
                 </ProtectedRoute>
               }
             />

@@ -1,5 +1,4 @@
 import { makeAutoObservable } from "mobx";
-import { useLocalObservable } from "mobx-react-lite";
 
 export interface User {
   email: string;
@@ -57,9 +56,12 @@ class AuthStore {
     this.user = null;
     this.token = null;
     saveAuthToSession(null, null);
+    console.log("AuthStore.logout called: session storage should be cleared");
   }
 }
 
+export const authStore = new AuthStore();
+
 export function useAuth() {
-  return useLocalObservable(() => new AuthStore());
+  return authStore;
 }

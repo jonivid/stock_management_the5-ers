@@ -20,7 +20,6 @@ const logger = new Logger("DatabaseModule");
         let lastError = null;
         while (!connected && retries > 0) {
           try {
-            // Try to connect
             await import("mongoose").then((mongoose) => mongoose.connect(uri));
             connected = true;
             logger.log("Successfully connected to MongoDB!");

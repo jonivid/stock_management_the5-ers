@@ -1,8 +1,13 @@
-import { Injectable, Logger } from "@nestjs/common";
+import { Injectable, Logger, BadRequestException } from "@nestjs/common";
 import { HttpService } from "@nestjs/axios";
 import { firstValueFrom } from "rxjs";
 import { SearchResultDto } from "./search-result.dto";
 import { StockDetailDto } from "./stock-detail.dto";
+
+function isSupportedSymbol(symbol: string) {
+  // Only allow uppercase letters, no dots or suffixes (US stocks)
+  return /^[A-Z]+$/.test(symbol);
+}
 
 @Injectable()
 export class FmpClientService {
@@ -28,6 +33,10 @@ export class FmpClientService {
       const { data } = await firstValueFrom(
         this.httpService.get("/search-symbol", { params })
       );
+      // OPTIONAL: filter out non-supported symbols
+      // return data.filter((item: SearchResultDto) =>
+      //   isSupportedSymbol(item.symbol)
+      // );
       return data;
     } catch (error) {
       this.logger.error(
@@ -56,6 +65,10 @@ export class FmpClientService {
       const { data } = await firstValueFrom(
         this.httpService.get("/search-name", { params })
       );
+      // OPTIONAL: filter out non-supported symbols
+      // return data.filter((item: SearchResultDto) =>
+      //   isSupportedSymbol(item.symbol)
+      // );
       return data;
     } catch (error) {
       this.logger.error(
@@ -67,6 +80,11 @@ export class FmpClientService {
   }
 
   async getQuote(symbol: string): Promise<StockDetailDto[]> {
+    if (!isSupportedSymbol(symbol)) {
+      throw new BadRequestException(
+        "This stock is not supported in the current plan."
+      );
+    }
     const params = { symbol };
     const baseURL = this.httpService.axiosRef.defaults.baseURL;
     const apiKey = this.httpService.axiosRef.defaults.params?.apikey;

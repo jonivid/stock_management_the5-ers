@@ -27,19 +27,16 @@ const AppLayoutComponent: React.FC<{ children: React.ReactNode }> = ({
     }
   }, [isLoggedIn, navigate, location.pathname]);
 
-  // Helper to logout and navigate
   const handleLogout = () => {
     auth.logout();
     navigate("/login");
   };
 
-  // AntD Menu items array
   const menuItems = [
     {
       key: "/portfolio",
       label: <Link to="/portfolio">Portfolio</Link>,
     },
-    // Add more items here if needed
   ];
 
   return (

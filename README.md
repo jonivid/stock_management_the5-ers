@@ -24,7 +24,9 @@ stock_management_the5ers/
     │   │   └── modules/
     │   │       ├── users/
     │   │       ├── auth/
-    │   │       └── database/
+    │   │       ├── database/
+    │   │       ├── fmp-client/
+    │   │       └── portfolio/
     │   ├── test/
     │   ├── package.json
     │   └── jest.config.js
@@ -77,6 +79,12 @@ stock_management_the5ers/
 
 - **POST /users/signup**: Register a new user
 - **POST /auth/login**: Login and receive JWT
+- **Portfolio:**
+  - **GET /portfolio**: List user’s stocks (JWT required)
+  - **POST /portfolio**: Add stock to portfolio (JWT required)
+  - **DELETE /portfolio/:symbol**: Remove stock (JWT required)
+- **FMP Client:**
+  - Integrated with Financial Modeling Prep API for stock search and details
 - **Protected routes:** Use `@UseGuards(JwtAuthGuard)` in NestJS
 
 ---
@@ -92,6 +100,11 @@ stock_management_the5ers/
   npm run test:cov     # coverage
   npm run test:e2e     # e2e tests
   ```
+- **Portfolio module:**
+  - Unit tests for service and controller
+  - Integration test with in-memory MongoDB
+- **FmpClient module:**
+  - Unit and integration tests (real API, skip batch/invalid on free tier)
 
 ---
 
@@ -112,7 +125,9 @@ stock_management_the5ers/
 - [x] Docker Compose and environment setup
 - [x] Users, Auth, and Database modules implemented
 - [x] JWT authentication and protected routes
-- [x] Unit, integration, and e2e test setup
+- [x] FmpClient module for FMP API integration (search, quote, etc.)
+- [x] Portfolio module (add, list, remove stocks per user)
+- [x] Unit, integration, and e2e test setup for all modules
 - [x] Local and Docker Compose workflows tested and working
 
 ---

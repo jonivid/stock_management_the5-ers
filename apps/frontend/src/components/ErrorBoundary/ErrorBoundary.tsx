@@ -16,7 +16,6 @@ export class ErrorBoundary extends React.Component<
   }
 
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
-    // You can log error to an error reporting service here
   }
 
   handleReload = () => {

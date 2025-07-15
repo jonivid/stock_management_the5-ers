@@ -1,11 +1,9 @@
-// useAxios: Always uses VITE_BACKEND_URL as baseURL. Pass only relative paths (e.g., '/portfolio').
-// Handles trailing slash issues to avoid double slashes in requests.
+
 import { useState, useCallback } from "react";
 import axios from "axios";
 import type { AxiosRequestConfig, AxiosError } from "axios";
 import { useAuth } from "../stores/useAuth";
 
-// Remove trailing slash for consistency
 const RAW_BASE_URL = import.meta.env.VITE_BACKEND_URL;
 const BASE_URL = RAW_BASE_URL.endsWith("/")
   ? RAW_BASE_URL.slice(0, -1)
@@ -36,7 +34,6 @@ export function useAxios<T = any>(): UseAxiosResult<T> {
         if (auth.token) {
           headers["Authorization"] = `Bearer ${auth.token}`;
         }
-        // Ensure url does not have double slashes
         let url = config.url || "";
         if (url.startsWith("/")) {
           url = url;

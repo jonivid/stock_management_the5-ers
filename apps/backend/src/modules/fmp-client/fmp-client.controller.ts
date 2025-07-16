@@ -1,8 +1,10 @@
-import { Controller, Get, Query, Logger } from "@nestjs/common";
+import { Controller, Get, Query, Logger, UseGuards } from "@nestjs/common";
 import { FmpClientService } from "./fmp-client.service";
 import { SearchResultDto } from "./search-result.dto";
 import { StockDetailDto } from "./stock-detail.dto";
+import { JwtAuthGuard } from "../auth/jwt.guard";
 
+@UseGuards(JwtAuthGuard)
 @Controller("fmp-client")
 export class FmpClientController {
   private readonly logger = new Logger(FmpClientController.name);

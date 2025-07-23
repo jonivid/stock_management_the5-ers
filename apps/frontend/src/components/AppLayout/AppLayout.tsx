@@ -4,8 +4,9 @@ import { useAuth } from "../../stores/useAuth";
 import { COMPANY_NAME } from "../../constants";
 import { observer } from "mobx-react-lite";
 import { useEffect } from "react";
+import { StyledHeader } from "./Header.style";
 
-const { Header, Sider, Content } = Layout;
+const { Sider, Content } = Layout;
 
 const AppLayoutComponent: React.FC<{ children: React.ReactNode }> = ({
   children,
@@ -52,18 +53,7 @@ const AppLayoutComponent: React.FC<{ children: React.ReactNode }> = ({
         </Sider>
       )}
       <Layout>
-        <Header
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            background: "#fff",
-            padding: "0 24px",
-            boxShadow: "0 2px 8px #f0f1f2",
-            height: 64,
-            flexShrink: 0,
-          }}
-        >
+        <StyledHeader>
           <div style={{ fontWeight: 700, fontSize: 20 }}>
             <Link to="/">{COMPANY_NAME}</Link>
           </div>
@@ -77,7 +67,7 @@ const AppLayoutComponent: React.FC<{ children: React.ReactNode }> = ({
               </>
             )}
           </div>
-        </Header>
+        </StyledHeader>
         <Content
           style={{
             padding: 24,

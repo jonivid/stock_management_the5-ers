@@ -1,13 +1,8 @@
-
 import { useState, useCallback } from "react";
 import axios from "axios";
 import type { AxiosRequestConfig, AxiosError } from "axios";
 import { useAuth } from "../stores/useAuth";
-
-const RAW_BASE_URL = import.meta.env.VITE_BACKEND_URL;
-const BASE_URL = RAW_BASE_URL.endsWith("/")
-  ? RAW_BASE_URL.slice(0, -1)
-  : RAW_BASE_URL;
+import { axiosInstance } from "../services/axiosInstance";
 
 export interface UseAxiosResult<T> {
   data: T | null;
@@ -28,23 +23,15 @@ export function useAxios<T = any>(): UseAxiosResult<T> {
       setError(null);
       setData(null);
       try {
-        const headers: Record<string, any> = {
-          ...(config.headers || {}),
-        };
-        if (auth.token) {
-          headers["Authorization"] = `Bearer ${auth.token}`;
-        }
         let url = config.url || "";
         if (url.startsWith("/")) {
           url = url;
         } else {
           url = "/" + url;
         }
-        const response = await axios({
+        const response = await axiosInstance({
           ...config,
-          baseURL: BASE_URL,
           url,
-          headers,
         });
         setData(response.data);
         return response.data as T;

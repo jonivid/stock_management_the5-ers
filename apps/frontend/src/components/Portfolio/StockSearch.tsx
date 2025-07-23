@@ -2,14 +2,8 @@ import React from "react";
 import { observer } from "mobx-react-lite";
 import { List, Button, Tag, Spin, Alert, Empty } from "antd";
 import { usePortfolioStore } from "../../stores/portfolioStore";
-import axios from "axios";
 import useDebounce from "../../hooks/useDebounce";
 import { axiosInstance } from "../../services/axiosInstance";
-
-const RAW_BASE_URL = import.meta.env.VITE_BACKEND_URL;
-const BASE_URL = RAW_BASE_URL.endsWith("/")
-  ? RAW_BASE_URL.slice(0, -1)
-  : RAW_BASE_URL;
 
 interface StockSearchProps {
   query: string;

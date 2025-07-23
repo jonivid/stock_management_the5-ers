@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite";
-import { List, Skeleton } from "antd";
+import { List } from "antd";
 import { PortfolioItem } from "./PortfolioItem";
 import type { PortfolioListProps } from "./types";
 import styles from "./PortfolioList.module.css";

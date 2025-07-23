@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { observer } from "mobx-react-lite";
 import { usePortfolioStore } from "../stores/portfolioStore";
 import { PortfolioList } from "../components/Portfolio/PortfolioList";
 import { StockSearch } from "../components/Portfolio/StockSearch";
-import { Spin, Alert, Empty, Segmented, Input, Skeleton } from "antd";
+import { Alert, Empty, Segmented, Input, Skeleton } from "antd";
 
 const SECTION_HEADER_HEIGHT = 40;
 const SEARCH_CONTROLS_HEIGHT = 48;

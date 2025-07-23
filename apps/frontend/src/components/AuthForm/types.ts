@@ -1,17 +1,24 @@
+import type { Rule } from "antd/es/form";
+
 export interface AuthField {
   label: string;
   name: string;
   type?: "text" | "email" | "password";
   autoComplete?: string;
-  rules?: any[];
+  rules?: Rule[];
   dependencies?: string[];
-  validator?: (getFieldValue: (name: string) => any) => any;
+}
+
+export interface AuthFormValues {
+  email: string;
+  password: string;
+  confirm: string;
 }
 
 export interface AuthFormProps {
   title: string;
   fields: AuthField[];
-  onFinish: (values: any) => void;
+  onFinish: (values: AuthFormValues) => void;
   submitText: string;
   loading: boolean;
   error?: string | null;

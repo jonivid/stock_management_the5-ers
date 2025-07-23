@@ -1,4 +1,5 @@
 import { makeAutoObservable, runInAction } from "mobx";
+import axios from "axios";
 import { axiosInstance } from "../services/axiosInstance";
 import type { StockDetail } from "./types";
 
@@ -22,14 +23,19 @@ class PortfolioStore {
       const res = await axiosInstance.get("/portfolio");
       runInAction(() => {
         this.portfolio = Array.isArray(res.data)
-          ? res.data.map((item: any) => item.symbol)
+          ? res.data.map((item: { symbol: string }) => item.symbol)
           : [];
         this.loading = false;
       });
-    } catch (err: any) {
+    } catch (err: unknown) {
       runInAction(() => {
-        this.error =
-          err.response?.data?.message || err.message || "Unknown error";
+        let errorMsg = "Unknown error";
+        if (axios.isAxiosError(err)) {
+          errorMsg = err.response?.data?.message || err.message || errorMsg;
+        } else if (err instanceof Error) {
+          errorMsg = err.message;
+        }
+        this.error = errorMsg;
         this.loading = false;
       });
     }
@@ -52,10 +58,15 @@ class PortfolioStore {
         }
         this.stockDetailsLoading[symbol] = false;
       });
-    } catch (err: any) {
+    } catch (err: unknown) {
       runInAction(() => {
-        this.stockDetailsError[symbol] =
-          err.response?.data?.message || err.message || "Unknown error";
+        let errorMsg = "Unknown error";
+        if (axios.isAxiosError(err)) {
+          errorMsg = err.response?.data?.message || err.message || errorMsg;
+        } else if (err instanceof Error) {
+          errorMsg = err.message;
+        }
+        this.stockDetailsError[symbol] = errorMsg;
         this.stockDetailsLoading[symbol] = false;
       });
     }
@@ -67,10 +78,15 @@ class PortfolioStore {
     try {
       await axiosInstance.post("/portfolio", { symbol });
       await this.fetchPortfolio();
-    } catch (err: any) {
+    } catch (err: unknown) {
       runInAction(() => {
-        this.error =
-          err.response?.data?.message || err.message || "Unknown error";
+        let errorMsg = "Unknown error";
+        if (axios.isAxiosError(err)) {
+          errorMsg = err.response?.data?.message || err.message || errorMsg;
+        } else if (err instanceof Error) {
+          errorMsg = err.message;
+        }
+        this.error = errorMsg;
         this.loading = false;
       });
     }
@@ -82,10 +98,15 @@ class PortfolioStore {
     try {
       await axiosInstance.delete(`/portfolio/${symbol}`);
       await this.fetchPortfolio();
-    } catch (err: any) {
+    } catch (err: unknown) {
       runInAction(() => {
-        this.error =
-          err.response?.data?.message || err.message || "Unknown error";
+        let errorMsg = "Unknown error";
+        if (axios.isAxiosError(err)) {
+          errorMsg = err.response?.data?.message || err.message || errorMsg;
+        } else if (err instanceof Error) {
+          errorMsg = err.message;
+        }
+        this.error = errorMsg;
         this.loading = false;
       });
     }

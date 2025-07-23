@@ -3,10 +3,10 @@ import { Result, Button } from "antd";
 import type { ErrorBoundaryState } from "./types";
 
 export class ErrorBoundary extends React.Component<
-  React.PropsWithChildren<{}>,
+  React.PropsWithChildren<object>,
   ErrorBoundaryState
 > {
-  constructor(props: React.PropsWithChildren<{}>) {
+  constructor(props: React.PropsWithChildren<object>) {
     super(props);
     this.state = { hasError: false };
   }
@@ -15,8 +15,7 @@ export class ErrorBoundary extends React.Component<
     return { hasError: true };
   }
 
-  componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
-  }
+  componentDidCatch() {}
 
   handleReload = () => {
     window.location.reload();

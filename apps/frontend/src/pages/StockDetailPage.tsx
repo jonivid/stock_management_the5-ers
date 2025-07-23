@@ -6,11 +6,9 @@ import { useEffect } from "react";
 import { StockDetail } from "../components/StockDetail/StockDetail";
 import { StockDetailSkeleton } from "../components/StockDetail/StockDetailSkeleton";
 
-interface StockDetailPageProps {}
-
 const { Title } = Typography;
 
-const StockDetailPage = observer(({}: StockDetailPageProps) => {
+const StockDetailPage = observer(() => {
   const { symbol } = useParams<{ symbol: string }>();
   const store = usePortfolioStore();
 

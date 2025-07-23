@@ -1,5 +1,6 @@
 import { Form, Input, Button, Typography, Alert } from "antd";
 import type { AuthFormProps } from "./types";
+import type { RuleObject } from "antd/es/form";
 
 const { Title } = Typography;
 
@@ -26,7 +27,23 @@ export const AuthForm: React.FC<AuthFormProps> = ({
           label={field.label}
           name={field.name}
           dependencies={field.dependencies}
-          rules={field.rules}
+          rules={
+            field.name === "confirm"
+              ? [
+                  ...(field.rules || []),
+                  ({ getFieldValue }) => ({
+                    validator(_: RuleObject, value: string) {
+                      if (!value || getFieldValue("password") === value) {
+                        return Promise.resolve();
+                      }
+                      return Promise.reject(
+                        new Error("Passwords do not match")
+                      );
+                    },
+                  }),
+                ]
+              : field.rules
+          }
         >
           {field.type === "password" ? (
             <Input.Password autoComplete={field.autoComplete} />

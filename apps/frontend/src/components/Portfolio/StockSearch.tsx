@@ -16,7 +16,7 @@ export const StockSearch = observer(
   ({ query, searchType }: StockSearchProps) => {
     const portfolioStore = usePortfolioStore();
     const debouncedQuery = useDebounce(query, 400);
-    const [results, setResults] = React.useState<any[] | string | null>(null);
+    const [results, setResults] = React.useState<Array<{ symbol: string; name: string; exchange?: string }> | string | null>(null);
     const [loading, setLoading] = React.useState(false);
     const [error, setError] = React.useState<string | null>(null);
 
@@ -40,9 +40,10 @@ export const StockSearch = observer(
             params: { query: debouncedQuery.trim() },
           });
           setResults(Array.isArray(res.data) ? res.data : []);
-        } catch (err: any) {
+        } catch (err) {
+          const errorObj = err as { response?: { data?: { message?: string } }; message?: string };
           setError(
-            err.response?.data?.message || err.message || "Unknown error"
+            errorObj.response?.data?.message || errorObj.message || "Unknown error"
           );
           setResults("");
         } finally {

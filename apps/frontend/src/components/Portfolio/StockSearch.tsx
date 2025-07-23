@@ -4,6 +4,7 @@ import { List, Button, Tag, Spin, Alert, Empty } from "antd";
 import { usePortfolioStore } from "../../stores/portfolioStore";
 import axios from "axios";
 import useDebounce from "../../hooks/useDebounce";
+import { axiosInstance } from "../../services/axiosInstance";
 
 const RAW_BASE_URL = import.meta.env.VITE_BACKEND_URL;
 const BASE_URL = RAW_BASE_URL.endsWith("/")
@@ -41,8 +42,7 @@ export const StockSearch = observer(
             searchType === "symbol"
               ? "/fmp-client/search-symbol"
               : "/fmp-client/search-name";
-          const res = await axios.get(endpoint, {
-            baseURL: BASE_URL,
+          const res = await axiosInstance.get(endpoint, {
             params: { query: debouncedQuery.trim() },
           });
           setResults(Array.isArray(res.data) ? res.data : []);
